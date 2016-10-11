@@ -7,6 +7,7 @@
 #define DICTIONARY_HASHTABLE_H
 
 #include <string>
+#include <unordered_set>
 
 /**
  *  The class for a dictionary ADT, implemented as a Hashtable

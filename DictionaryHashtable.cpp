@@ -1,26 +1,31 @@
 #include "util.h"
 #include "DictionaryHashtable.h"
+#include <unordered_set>
+
 
 /* Create a new Dictionary that uses a Hashset back end */
 DictionaryHashtable::DictionaryHashtable(){
-  dictionaryHashSet = std::unordered_set<std::string> dHashTable;
+  std::unordered_set<std::string> dictionaryHashSet;
 }
 
 /* Insert a word into the dictionary. */
 bool DictionaryHashtable::insert(std::string word)
 {
-  return std::get<1>(dictionaryHashSet.insert(word));
+  return (dictionaryHashSet.insert(word)).second;
 }
 
 /* Return true if word is in the dictionary, and false otherwise */
 bool DictionaryHashtable::find(std::string word) const
 {
-  return std::get<1>(dictionaryHashSet.find(word));
+  if(dictionaryHashSet.find(word) != dictionaryHashSet.end()){
+    return true;
+  }
+  return false;
 }
 
 /* Destructor */
 DictionaryHashtable::~DictionaryHashtable()
 {
-  delete dictionaryHashSet;
+  delete &dictionaryHashSet;
   delete this;
 }

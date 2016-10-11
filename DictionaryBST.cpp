@@ -16,17 +16,20 @@ DictionaryBST::DictionaryBST(){
 /* Insert a word into the dictionary. */
 bool DictionaryBST::insert(std::string word)
 {
-  return std::get<1>(BSTSet.insert(word));
+  return (BSTSet.insert(word)).second;
 }
 
 /* Return true if word is in the dictionary, and false otherwise */
 bool DictionaryBST::find(std::string word) const
 {
-  return std::get<1>(BSTSet.find(word));
+  if(BSTSet.find(word) == BSTSet.end()){
+    return true;   
+  }
+  return false;
 }
 
 /* Destructor */
 DictionaryBST::~DictionaryBST(){
-  delete BSTSet;
+  delete &BSTSet;
   delete this;
 }
