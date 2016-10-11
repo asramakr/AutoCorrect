@@ -33,6 +33,9 @@ public:
 
 private:
   // Add your own data members and methods here
+  
+  // variable for unordered_set initialized to hold elements
+  std::unordered_set<std::string> dictionaryHashSet;
 };
 
 #endif // DICTIONARY_HASHTABLE_H
