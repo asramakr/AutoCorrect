@@ -26,6 +26,5 @@ bool DictionaryHashtable::find(std::string word) const
 /* Destructor */
 DictionaryHashtable::~DictionaryHashtable()
 {
-  delete &dictionaryHashSet;
-  delete this;
+  dictionaryHashSet.clear();
 }

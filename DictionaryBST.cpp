@@ -30,6 +30,5 @@ bool DictionaryBST::find(std::string word) const
 
 /* Destructor */
 DictionaryBST::~DictionaryBST(){
-  delete &BSTSet;
-  delete this;
+  BSTSet.clear();
 }
