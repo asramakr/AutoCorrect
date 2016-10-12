@@ -1,8 +1,26 @@
 #include "util.h"
 #include "DictionaryTrie.h"
+#include <iostream>
+using namespace std;
 
 /* Create a new Dictionary that uses a Trie back end */
-DictionaryTrie::DictionaryTrie(){}
+DictionaryTrie::DictionaryTrie(){
+  root = new Node();
+}
+
+Node::Node() {
+  for(int i = 0; i < 26; ++i) {
+    alphabet[i] = NULL;
+  }
+  isWord = false;
+  freq = 0;
+}
+
+Node::~Node(){
+  delete alphabet;
+  delete &isWord;
+  delete &freq;
+}
 
 /* Insert a word with its frequency into the dictionary.
  * Return true if the word was inserted, and false if it
@@ -10,12 +28,56 @@ DictionaryTrie::DictionaryTrie(){}
  * invalid (empty string) */
 bool DictionaryTrie::insert(std::string word, unsigned int freq)
 {
-  return false;
+  if(word.size() == 0){
+    return false;
+  }
+  unsigned int counter = 0;
+  Node* currentNode = root;
+  while(counter < word.size()-1){
+    int hashWord = (int)word.at(counter);
+    int total = hashWord - 97;
+    cout << total << endl;
+    cout << currentNode->alphabet[total] << endl;
+    if(currentNode != NULL){
+      currentNode = currentNode->alphabet[hashWord-97];      
+    }
+    else{
+      currentNode->alphabet[hashWord-97] = new Node();
+      currentNode = currentNode->alphabet[hashWord-97]; 
+    }
+    counter++;
+    if(counter == word.size()-1){
+      if(currentNode->isWord == true){
+        if(currentNode->freq > freq){
+          currentNode->freq = freq;
+        }
+        return false;
+      }
+      currentNode->isWord = true;
+    }
+  }
+  return true;
 }
 
 /* Return true if word is in the dictionary, and false otherwise */
 bool DictionaryTrie::find(std::string word) const
 {
+  unsigned int counter = 0;
+  Node* currentNode = root;
+  while(counter < word.size()-1){
+    if(currentNode != NULL){
+      currentNode = currentNode->alphabet[(int)(word[counter])-97];      
+    }
+    else{
+      return false;
+    }
+    counter++;
+    if(counter == word.size()-1){
+      if(currentNode->isWord == true){
+        return true;
+      }
+    }
+  }
   return false;
 }
 
@@ -36,4 +98,6 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
 }
 
 /* Destructor */
-DictionaryTrie::~DictionaryTrie(){}
+DictionaryTrie::~DictionaryTrie(){
+  delete root;
+}

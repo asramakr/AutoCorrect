@@ -9,6 +9,16 @@
 #include <vector>
 #include <string>
 
+class Node
+{
+  public:
+    Node* alphabet[26];
+    bool isWord;
+    unsigned int freq;
+    Node();
+    ~Node();
+};
+
 /**
  *  The class for a dictionary ADT, implemented as a trie
  *  You may implement this class as either a mulit-way trie
@@ -49,6 +59,7 @@ public:
 
 private:
   // Add your own data members and methods here
+  Node * root;
 };
 
 #endif // DICTIONARY_TRIE_H
