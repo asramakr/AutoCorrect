@@ -13,10 +13,10 @@ class Node
 {
   public:
     Node* alphabet[26];
+    Node* parent;
     bool isWord;
     unsigned int freq;
     Node();
-    ~Node();
 };
 
 /**
