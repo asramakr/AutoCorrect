@@ -36,9 +36,9 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq)
   while(counter < word.size()-1){
     int hashWord = (int)word.at(counter);
     int total = hashWord - 97;
-    cout << total << endl;
-    cout << currentNode->alphabet[total] << endl;
-    if(currentNode != NULL){
+    //cout << total << endl;
+    //cout << currentNode->alphabet[total] << endl;
+    if(currentNode->alphabet[hashWord-97] != NULL){
       currentNode = currentNode->alphabet[hashWord-97];      
     }
     else{
@@ -99,5 +99,5 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
 
 /* Destructor */
 DictionaryTrie::~DictionaryTrie(){
-  delete root;
+  //delete root;
 }
