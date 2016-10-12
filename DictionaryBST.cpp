@@ -23,9 +23,9 @@ bool DictionaryBST::insert(std::string word)
 bool DictionaryBST::find(std::string word) const
 {
   if(BSTSet.find(word) == BSTSet.end()){
-    return true;   
+    return false;   
   }
-  return false;
+  return true;
 }
 
 /* Destructor */
