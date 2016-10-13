@@ -12,7 +12,7 @@
 class Node
 {
   public:
-    Node* alphabet[26];
+    Node* alphabet[27];
     Node* parent;
     bool isWord;
     unsigned int freq;

@@ -9,7 +9,7 @@ DictionaryTrie::DictionaryTrie(){
 }
 
 Node::Node() {
-  for(int i = 0; i < 26; ++i) {
+  for(int i = 0; i < 27; ++i) {
     alphabet[i] = NULL;
   }
   parent = NULL;
@@ -24,30 +24,44 @@ Node::Node() {
 bool DictionaryTrie::insert(std::string word, unsigned int freq)
 {
   if(word.size() == 0){
-    return false;
+    return false; //if the string doesn't exist, return false
   }
-  unsigned int counter = 0;
+  unsigned int counter = 0; //counter to keep track of word array
   Node* currentNode = root;
-  while(counter < word.size()-1){
-    int hashWord = (int)word.at(counter);
-    if(currentNode->alphabet[hashWord-97] != NULL){
+  while(counter < word.size()-1){ //loop that loops the through the word
+    int hashWord = (int)word.at(counter); //the ascii value of char
+    //if the char is a space
+    if(hashWord == 32 && currentNode->alphabet[26] != NULL){
+      currentNode->alphabet[26]->parent = currentNode;
+      currentNode = currentNode->alphabet[26];
+    }
+    //else use the hashWord-97
+    else if(currentNode->alphabet[hashWord-97] != NULL){
       currentNode->alphabet[hashWord-97]->parent = currentNode;
       currentNode = currentNode->alphabet[hashWord-97];      
     }
+    //if the Node doesn't exist create it
     else{
-      currentNode->alphabet[hashWord-97] = new Node();
-      currentNode->alphabet[hashWord-97]->parent = currentNode;      
-      currentNode = currentNode->alphabet[hashWord-97]; 
+      if(hashWord == 32){
+        currentNode->alphabet[26] = new Node();
+        currentNode->alphabet[26]->parent = currentNode;
+        currentNode = currentNode->alphabet[26];
+      }
+      else{
+        currentNode->alphabet[hashWord-97] = new Node();
+        currentNode->alphabet[hashWord-97]->parent = currentNode;      
+        currentNode = currentNode->alphabet[hashWord-97]; 
+      }
     }
-    counter++;
-    if(counter == word.size()-1){
+    counter++; //increment counter
+    if(counter == word.size()-1){ //check if last char
       if(currentNode->isWord == true){
         if(currentNode->freq > freq){
           currentNode->freq = freq;
         }
-        return false;
+        return false; //return false if the word is already inserted
       }
-      currentNode->isWord = true;
+      currentNode->isWord = true; //make isWord true
     }
   }
   return true;
@@ -60,19 +74,25 @@ bool DictionaryTrie::find(std::string word) const
   Node* currentNode = root;
   while(counter < word.size()-1){
     if(currentNode != NULL){
-      currentNode = currentNode->alphabet[(int)(word[counter])-97];      
+      if((int)(word[counter]) == 32){
+        currentNode = currentNode->alphabet[26]; //the space node
+      }
+      else{
+        //the rest of the alphabet
+        currentNode = currentNode->alphabet[(int)(word[counter])-97];
+      }      
     }
     else{
-      return false;
+      return false; //if a letter doesn't exist return false
     }
-    counter++;
-    if(counter == word.size()-1){
+    counter++;//counter increments every loop
+    if(counter == word.size()-1){ //check if at word end
       if(currentNode->isWord == true){
-        return true;
+        return true; //return true if word is found
       }
     }
   }
-  return false;
+  return false; //if it isn't found, return false
 }
 
 /* Return up to num_completions of the most frequent completions
@@ -93,8 +113,9 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
 
 /* Destructor */
 DictionaryTrie::~DictionaryTrie(){
-  Node * curr = root;
+  Node * curr = root; //starts at root
   while(curr){
+    //search through the whole alphabet to find a child
     if(curr->alphabet[0]){
       curr = curr->alphabet[0];
     }
@@ -173,6 +194,10 @@ DictionaryTrie::~DictionaryTrie(){
     else if(curr->alphabet[25]){
       curr = curr->alphabet[25];
     }
+    else if(curr->alphabet[26]){
+      curr = curr->alphabet[26];
+    }
+    //once the all the child nodes are deleted move up to the parent
     else if(curr->parent){      
       curr = curr->parent;
 
@@ -280,7 +305,11 @@ DictionaryTrie::~DictionaryTrie(){
       else if(curr->alphabet[25]){
         delete curr->alphabet[25];
         curr->alphabet[25] = NULL; 
-      }      
+      }
+      else if(curr->alphabet[26]){
+        delete curr->alphabet[26];
+        curr->alphabet[26] = NULL;
+      }
     }
     //delete last node
     else{

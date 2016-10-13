@@ -1056,7 +1056,7 @@ int main(int argc, char** argv)
       cout << "Finding: \"" << *nit6 << "\"... ";
       t_bst6 = d_bst6.find(*nit6);
       t_ht6 = d_ht6.find(*nit6);
-      tt = dt6.find(*nit6);
+      tt6 = dt6.find(*nit6);
       //cout << t_bst << " " << t_ht << " "<< tt << "... ";
      
       // if failed for BST
