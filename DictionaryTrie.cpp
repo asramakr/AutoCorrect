@@ -28,7 +28,8 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq)
   }
   unsigned int counter = 0; //counter to keep track of word array
   Node* currentNode = root;
-  while(counter < word.size()-1){ //loop that loops the through the word
+
+  while(counter < word.size()){ //loop that loops the through the word
     int hashWord = (int)word.at(counter); //the ascii value of char
     //if the char is a space
     if(hashWord == 32 && currentNode->alphabet[26] != NULL){
@@ -54,7 +55,7 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq)
       }
     }
     counter++; //increment counter
-    if(counter == word.size()-1){ //check if last char
+    if(counter == word.size()){ //check if last char
       if(currentNode->isWord == true){
         if(currentNode->freq > freq){
           currentNode->freq = freq;
@@ -72,7 +73,7 @@ bool DictionaryTrie::find(std::string word) const
 {
   unsigned int counter = 0;
   Node* currentNode = root;
-  while(counter < word.size()-1){
+  while(counter < word.size()){
     if(currentNode != NULL){
       if((int)(word[counter]) == 32){
         currentNode = currentNode->alphabet[26]; //the space node
@@ -86,7 +87,7 @@ bool DictionaryTrie::find(std::string word) const
       return false; //if a letter doesn't exist return false
     }
     counter++;//counter increments every loop
-    if(counter == word.size()-1){ //check if at word end
+    if(counter == word.size()){ //check if at word end
       if(currentNode->isWord == true){
         return true; //return true if word is found
       }
