@@ -60,6 +60,7 @@ public:
 private:
   // Add your own data members and methods here
   Node * root;
+  std::string wordFinder(Node * currentNode);
 };
 
 #endif // DICTIONARY_TRIE_H
