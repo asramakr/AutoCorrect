@@ -1106,11 +1106,11 @@ int main(int argc, char** argv)
   sameWordsBeg = topCompletes.begin();
   sameWordsEnd = topCompletes.end();
 
-/*
+
   for (; sameWordsBeg != sameWordsEnd; ++sameWordsBeg) {
     cout << *sameWordsBeg << endl;
   }
-*/
+
 
   
   

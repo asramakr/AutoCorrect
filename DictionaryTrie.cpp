@@ -7,11 +7,11 @@
 using namespace std;
 
 
-  bool CompareFunc::operator ()(const std::pair<unsigned int, std::string> 
-      &var1, const std::pair<unsigned int, std::string> &var2)
-  {
-    return var1.first < var2.first;
-  }
+bool CompareFunc::operator ()(const std::pair<unsigned int, std::string> 
+    &var1, const std::pair<unsigned int, std::string> &var2)
+{
+  return var1 < var2;
+}
 
 /* Create a new Dictionary that uses a Trie back end */
 DictionaryTrie::DictionaryTrie(){
@@ -67,12 +67,15 @@ bool DictionaryTrie::insert(std::string word, unsigned int freq)
     counter++; //increment counter
     if(counter == word.size()){ //check if last char
       if(currentNode->isWord == true){
-        if(currentNode->freq > freq){
+        if(currentNode->freq < freq){
           currentNode->freq = freq;
         }
         return false; //return false if the word is already inserted
       }
-      currentNode->isWord = true; //make isWord true
+      else {
+        currentNode->freq = freq;
+        currentNode->isWord = true; //make isWord true
+      }
     }
   }
   return true;
@@ -146,12 +149,12 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
   }
   else {
 
-    auto totalWordsBeg = totalWords.begin();
-    auto totalWordsEnd = totalWords.end();
+//    auto totalWordsBeg = totalWords.begin();
+//    auto totalWordsEnd = totalWords.end();
 
-    for (; *totalWordsBeg != *totalWordsEnd; ++totalWordsBeg) {
-      cout << "totalWords word: " << (*totalWordsBeg).second << endl;
-    }
+//    for (; *totalWordsBeg != *totalWordsEnd; ++totalWordsBeg) {
+//      cout << "totalWords word: " << (*totalWordsBeg).second << endl;
+//    }
     auto totalWordsList = totalWords.end();
     totalWordsList--;
     for (unsigned int i = 0; i < num_completions; i++) {
@@ -160,12 +163,14 @@ std::vector<std::string> DictionaryTrie::predictCompletions(std::string prefix, 
     }
   }
 
-  auto wordsBeg = words.begin();
-  auto wordsEnd = words.end();
+  
+//  auto wordsBeg = words.begin();
+  //auto wordsEnd = words.end();
+   
 
-  for(; *wordsBeg != *wordsEnd; ++wordsBeg) {
-    cout << *wordsBeg << endl;
-  }
+//  for(unsigned int i = 0; i<words.size(); i++) {
+//    cout << *(wordsBeg++) << endl;
+//  } 
 
   return words;
 }
@@ -482,7 +487,7 @@ std::string DictionaryTrie::wordFinder(Node * currentNode){
     myQueue.pop();
   }
 
-  cout << "wordFinder word: " << word << endl;
+//  cout << "wordFinder word: " << word << endl;
   
   return word;
 }

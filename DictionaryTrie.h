@@ -10,11 +10,11 @@
 #include <string>
 #include <set>
 #include <utility>
+#include <algorithm>
 
-class CompareFunc {
-  public:
-    bool operator()(const std::pair<unsigned int, std::string> &var1, const 
-        std::pair<unsigned int, std::string> &var2);
+struct CompareFunc {
+  bool operator()(const std::pair<unsigned int, std::string>& var1, const 
+    std::pair<unsigned int, std::string>& var2);
 }; 
 
 class Node
@@ -61,11 +61,7 @@ public:
    */
   std::vector<std::string>
   predictCompletions(std::string prefix, unsigned int num_completions);
-  /*struct CompareFunc{
-    bool operator()(std::pair<unsigned int, std::string> &a, pair<unsigned int, std::string> &b);
-  };
-  */
-  std::set< std::pair<unsigned int, std::string>> totalWords;
+  std::set< std::pair<unsigned int, std::string>, CompareFunc> totalWords;
 
   /* Destructor */
   ~DictionaryTrie();
