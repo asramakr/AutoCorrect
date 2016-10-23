@@ -1086,6 +1086,37 @@ int main(int argc, char** argv)
   }
   cout << endl;
 
+  // Test predictCompletions
+
+  DictionaryTrie sameWordsTrie;
+  std::vector<std::string> topCompletes;
+
+  sameWordsTrie.insert("he", 1);
+  sameWordsTrie.insert("height", 4);
+  sameWordsTrie.insert("her", 3);
+  sameWordsTrie.insert("hemming", 5);
+  sameWordsTrie.insert("headline", 6);
+  sameWordsTrie.insert("cat", 1);
+
+  topCompletes = sameWordsTrie.predictCompletions("he", 4);
+
+  vector<string>::iterator sameWordsBeg;
+  vector<string>::iterator sameWordsEnd;
+
+  sameWordsBeg = topCompletes.begin();
+  sameWordsEnd = topCompletes.end();
+
+/*
+  for (; sameWordsBeg != sameWordsEnd; ++sameWordsBeg) {
+    cout << *sameWordsBeg << endl;
+  }
+*/
+
+  
+  
+
+
+
 /*You are supposed to add more test cases in this file */
    DictionaryBST dBST1;
    std::ifstream in;

@@ -8,6 +8,14 @@
 
 #include <vector>
 #include <string>
+#include <set>
+#include <utility>
+
+class CompareFunc {
+  public:
+    bool operator()(const std::pair<unsigned int, std::string> &var1, const 
+        std::pair<unsigned int, std::string> &var2);
+}; 
 
 class Node
 {
@@ -53,6 +61,11 @@ public:
    */
   std::vector<std::string>
   predictCompletions(std::string prefix, unsigned int num_completions);
+  /*struct CompareFunc{
+    bool operator()(std::pair<unsigned int, std::string> &a, pair<unsigned int, std::string> &b);
+  };
+  */
+  std::set< std::pair<unsigned int, std::string>> totalWords;
 
   /* Destructor */
   ~DictionaryTrie();
@@ -61,6 +74,7 @@ private:
   // Add your own data members and methods here
   Node * root;
   std::string wordFinder(Node * currentNode);
+  bool traverseAllWords(Node * currentNode);
 };
 
 #endif // DICTIONARY_TRIE_H
