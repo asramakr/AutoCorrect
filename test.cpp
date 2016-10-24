@@ -1086,10 +1086,13 @@ int main(int argc, char** argv)
   }
   cout << endl;
 
-  // Test predictCompletions
+  // Test 1: predictCompletions
 
+  cout << "Testing autocomplete..." << endl;
   DictionaryTrie sameWordsTrie;
   std::vector<std::string> topCompletes;
+  std::string incompletePrefix = "he";
+  unsigned int numTopCompletes = 4;
 
   sameWordsTrie.insert("he", 1);
   sameWordsTrie.insert("height", 4);
@@ -1098,7 +1101,10 @@ int main(int argc, char** argv)
   sameWordsTrie.insert("headline", 6);
   sameWordsTrie.insert("cat", 1);
 
-  topCompletes = sameWordsTrie.predictCompletions("he", 4);
+  topCompletes = sameWordsTrie.predictCompletions(incompletePrefix, 
+      numTopCompletes);
+  cout << "Top " << numTopCompletes << " Completions for '" << 
+      incompletePrefix << "':" << endl;
 
   vector<string>::iterator sameWordsBeg;
   vector<string>::iterator sameWordsEnd;
@@ -1111,12 +1117,143 @@ int main(int argc, char** argv)
     cout << *sameWordsBeg << endl;
   }
 
+  cout << endl;
+
+  // Test 2: predictCompletions
+  cout << "Testing autocomplete..." << endl;
+  DictionaryTrie sameWordsTrie2;
+  std::vector<std::string> topCompletes2;
+  std::string incompletePrefix2 = "ca";
+  unsigned int numTopCompletes2 = 3;
+
+  sameWordsTrie2.insert("catch", 4);
+  sameWordsTrie2.insert("car", 8);
+  sameWordsTrie2.insert("cat", 9);
+  sameWordsTrie2.insert("california", 6);
+  sameWordsTrie2.insert("can", 3);
+  sameWordsTrie2.insert("calico", 2);
+
+
+  topCompletes2 = sameWordsTrie2.predictCompletions(incompletePrefix2, 
+      numTopCompletes2);
+  cout << "Top " << numTopCompletes2 << " Completions for '" << 
+      incompletePrefix2 << "':" << endl;
+
+
+  vector<string>::iterator sameWordsBeg2;
+  vector<string>::iterator sameWordsEnd2;
+
+  sameWordsBeg2 = topCompletes2.begin();
+  sameWordsEnd2 = topCompletes2.end();
+
+
+  for (; sameWordsBeg2 != sameWordsEnd2; ++sameWordsBeg2) {
+    cout << *sameWordsBeg2 << endl;
+  }
+
+  cout << endl;
+  
+  // Test 3: predictCompletions
+  cout << "Testing autocomplete..." << endl;
+  DictionaryTrie sameWordsTrie3;
+  std::vector<std::string> topCompletes3;
+  std::string incompletePrefix3 = "orang";
+  unsigned int numTopCompletes3 = 3;
+
+  sameWordsTrie3.insert("orange", 11);
+  sameWordsTrie3.insert("orangutan", 8);
+  sameWordsTrie3.insert("apple", 5);
+
+
+  topCompletes3 = sameWordsTrie3.predictCompletions(incompletePrefix3, 
+      numTopCompletes3);
+  cout << "Top " << numTopCompletes3 << " Completions for '" << 
+      incompletePrefix3 << "':" << endl;
+
+
+  vector<string>::iterator sameWordsBeg3;
+  vector<string>::iterator sameWordsEnd3;
+
+  sameWordsBeg3 = topCompletes3.begin();
+  sameWordsEnd3 = topCompletes3.end();
+
+
+  for (; sameWordsBeg3 != sameWordsEnd3; ++sameWordsBeg3) {
+    cout << *sameWordsBeg3 << endl;
+  }
+
+  // Test 4: predictCompletions
+  cout << "Testing autocomplete..." << endl;
+  DictionaryTrie sameWordsTrie4;
+  std::vector<std::string> topCompletes4;
+  std::string incompletePrefix4 = "xylo";
+  unsigned int numTopCompletes4 = 2;
+
+  sameWordsTrie4.insert("dog", 11);
+  sameWordsTrie4.insert("relaxation", 8);
+  sameWordsTrie4.insert("baseball", 5);
+  sameWordsTrie4.insert("handle", 3);
+  sameWordsTrie4.insert("computer", 14);
+
+
+  topCompletes4 = sameWordsTrie4.predictCompletions(incompletePrefix4, 
+      numTopCompletes4);
+  cout << "Top " << numTopCompletes4 << " Completions for '" << 
+      incompletePrefix4 << "':" << endl;
+
+
+  vector<string>::iterator sameWordsBeg4;
+  vector<string>::iterator sameWordsEnd4;
+
+  sameWordsBeg4 = topCompletes4.begin();
+  sameWordsEnd4 = topCompletes4.end();
+
+  if (topCompletes4.empty()) {
+    cout << "None found :( " << endl;
+  }
+  for (; sameWordsBeg4 != sameWordsEnd4; ++sameWordsBeg4) {
+    cout << *sameWordsBeg4 << endl;
+  }
+  
+  cout << endl;
+
+  // Test 5: predictCompletions
+  cout << "Testing autocomplete..." << endl;
+  DictionaryTrie sameWordsTrie5;
+  std::vector<std::string> topCompletes5;
+  std::string incompletePrefix5 = "i ";
+  unsigned int numTopCompletes5 = 3;
+
+  sameWordsTrie5.insert("i love", 11);
+  sameWordsTrie5.insert("i am", 9);
+  sameWordsTrie5.insert("i hate", 4);
+  sameWordsTrie5.insert("i went", 3);
+  sameWordsTrie5.insert("i like", 10);
+
+
+  topCompletes5 = sameWordsTrie5.predictCompletions(incompletePrefix5, 
+      numTopCompletes5);
+  cout << "Top " << numTopCompletes5 << " Completions for '" << 
+      incompletePrefix5 << "':" << endl;
+
+
+  vector<string>::iterator sameWordsBeg5;
+  vector<string>::iterator sameWordsEnd5;
+
+  sameWordsBeg5 = topCompletes5.begin();
+  sameWordsEnd5 = topCompletes5.end();
+
+  if (topCompletes5.empty()) {
+    cout << "None found :( " << endl;
+  }
+  for (; sameWordsBeg5 != sameWordsEnd5; ++sameWordsBeg5) {
+    cout << *sameWordsBeg5 << endl;
+  }
+  
+  cout << endl;
+  
 
   
-  
-
-
-
 /*You are supposed to add more test cases in this file */
    DictionaryBST dBST1;
    std::ifstream in;
