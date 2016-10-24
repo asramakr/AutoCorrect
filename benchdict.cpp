@@ -23,9 +23,17 @@ int main(int argc, char** argv)
   std::istream dictfile(&fb);
   Timer time;
 
+  //BST
   DictionaryBST dBST;
+  DictionaryHashtable dHash;
+  DictionaryTrie dTrie;
+
   unsigned int dictsize = min_size;
+  
   Utils::load_dict(dBST, dictfile, dictsize);
+  Utils::load_dict(dHash, dictfile, dictsize);
+  Utils::load_dict(dTrie, dictfile, dictsize);
+
   dictfile.seekg(0,ios_base::end);
   unsigned int numFileWords = dictfile.tellg();
   dictfile.seekg(0, ios_base::beg);
@@ -51,7 +59,7 @@ int main(int argc, char** argv)
       hundredWords.push_back(line);
     }
 
-    long long testTime;
+    long long testTime=0;
     for(int i = 0; i < 10; i++){
 
       auto BSTBeg = hundredWords.begin();
@@ -66,9 +74,84 @@ int main(int argc, char** argv)
     long long avgtestTime = testTime/10;
 
     cout << dictsize << "\t" << avgtestTime << endl;
-
-
-
-
   }
+
+  // Benchmarking HashTable
+  dictfile.seekg(0, ios_base::beg);  
+  cout << "DictionaryHashTable..." << endl;
+
+  for (unsigned int i = 0; i < num_iterations; i++) {    
+    dictsize = min_size+i*step_size;
+    
+    // if fewer than min_size+i*step_size in file, print warning
+    if (numFileWords < dictsize) {
+      cerr << "WARNING!! Fewer words in file than to be read" << endl;
+    }
+    
+    vector<string> hundredWords;
+    std::string line;
+
+    // read 100 words from dictfile and store in vector
+    for(int i = 0; i < 100; i++ )
+    {
+      std::getline( dictfile, line);
+      hundredWords.push_back(line);
+    }
+
+    long long testTime = 0;
+    for(int i = 0; i < 10; i++){
+
+      auto HashBeg = hundredWords.begin();
+      time.begin_timer();
+      for(int j = 0; j < 100; j++) {
+        dHash.find(*HashBeg);
+        HashBeg++;
+      }
+      testTime += time.end_timer();
+    }
+
+    long long avgtestTime = testTime/10;
+
+    cout << dictsize << "\t" << avgtestTime << endl;
+  } 
+
+
+  // Benchmarking MultiwayTrie
+  dictfile.seekg(0, ios_base::beg);  
+  cout << "DictionaryTrie..." << endl;
+
+  for (unsigned int i = 0; i < num_iterations; i++) {    
+    dictsize = min_size+i*step_size;
+    
+    // if fewer than min_size+i*step_size in file, print warning
+    if (numFileWords < dictsize) {
+      cerr << "WARNING!! Fewer words in file than to be read" << endl;
+    }
+    
+    vector<string> hundredWords;
+    std::string line;
+
+    // read 100 words from dictfile and store in vector
+    for(int i = 0; i < 100; i++ )
+    {
+      std::getline( dictfile, line);
+      hundredWords.push_back(line);
+    }
+
+    long long testTime = 0;
+    for(int i = 0; i < 10; i++){
+
+      auto TrieBeg = hundredWords.begin();
+      time.begin_timer();
+      for(int j = 0; j < 100; j++) {
+        dTrie.find(*TrieBeg);
+        TrieBeg++;
+      }
+      testTime += time.end_timer();
+    }
+
+    long long avgtestTime = testTime/10;
+
+    cout << dictsize << "\t" << avgtestTime << endl;
+  }   
 }
