@@ -4,6 +4,7 @@
 #include<algorithm>
 #include<set>
 #include<cstdlib>
+#include <string>
 #include "util.h"
 #include "DictionaryTrie.h"
 #include "DictionaryBST.h"
@@ -14,22 +15,29 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-  unsigned int min_size = (unsigned int)argv[1];
-  unsigned int step_size = (unsigned int)argv[2];
-  unsigned int num_iterations = (unsigned int)argv[3];
-  ifstream dictfile = (ifstream)argv[4];
+  unsigned int min_size = (unsigned int)std::atoi(argv[1]);
+  unsigned int step_size = (unsigned int)std::atoi(argv[2]);
+  unsigned int num_iterations = (unsigned int)std::atoi(argv[3]);
+  std::filebuf fb;
+  fb.open(argv[4], std::ios::binary);
+  std::istream dictfile(&fb);
+  Timer time;
 
+  DictionaryBST dBST;
+  unsigned int dictsize = min_size;
+  Utils::load_dict(dBST, dictfile, dictsize);
+  dictfile.seekg(0,ios_base::end);
+  unsigned int numFileWords = dictfile.tellg();
+  dictfile.seekg(0, ios_base::beg);
+  
   // Benchmarking BST
-  cout << "Benchmarking DictionaryBST..." << endl;
+  cout << "DictionaryBST..." << endl;
 
-  for (unsigned int i = 0; i < num_iterations; i++) {
-    DictionaryBST dBST;
-    Utils::load_dict(&dBST, dictfile, (min_size+i*step_size));
-    unsigned int numFileWords = (dictfile.seekg(0, ios_base::beg), 
-        dictfile.seekg(0,ios_base::end));
+  for (unsigned int i = 0; i < num_iterations; i++) {    
+    dictsize = min_size+i*step_size;
     
     // if fewer than min_size+i*step_size in file, print warning
-    if (numFileWords < (min_size+i*step_size)) {
+    if (numFileWords < dictsize) {
       cerr << "WARNING!! Fewer words in file than to be read" << endl;
     }
     
@@ -39,7 +47,7 @@ int main(int argc, char** argv)
     // read 100 words from dictfile and store in vector
     for(int i = 0; i < 100; i++ )
     {
-      getline( &dictfile, &line);
+      std::getline( dictfile, line);
       hundredWords.push_back(line);
     }
 
@@ -47,14 +55,20 @@ int main(int argc, char** argv)
     for(int i = 0; i < 10; i++){
 
       auto BSTBeg = hundredWords.begin();
-      util::Timer::begin_timer();
+      time.begin_timer();
       for(int j = 0; j < 100; j++) {
         dBST.find(*BSTBeg);
         BSTBeg++;
       }
-      testTime += util::Timer::end_timer();
+      testTime += time.end_timer();
     }
+
+    long long avgtestTime = testTime/10;
+
+    cout << dictsize << "\t" << avgtestTime << endl;
+
+
 
 
   }
-
+}
