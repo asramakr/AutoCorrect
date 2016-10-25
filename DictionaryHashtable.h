@@ -1,6 +1,7 @@
 /**
  *  CSE 100 PA3 C++ Autocomplete
  *  Authors: Jor-el Briones, Christine Alvarado
+ *  Arun Ramakrishnan, Alexis Atianzar
  */
 
 #ifndef DICTIONARY_HASHTABLE_H

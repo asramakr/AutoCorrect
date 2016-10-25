@@ -1,3 +1,11 @@
+/*
+ * Authors: Alexis Atianzar, Arun Ramakrishnan
+ * Date: 10/10/16
+ * Description: This class tests the dictionary classes by testing their
+ * run time, and seeing how fast they run comparitvely.
+ */
+
+
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -30,6 +38,7 @@ int main(int argc, char** argv)
 
   unsigned int dictsize = min_size;
   
+ 
   Utils::load_dict(dBST, dictfile, dictsize);
   Utils::load_dict(dHash, dictfile, dictsize);
   Utils::load_dict(dTrie, dictfile, dictsize);
@@ -76,6 +85,8 @@ int main(int argc, char** argv)
     cout << dictsize << "\t" << avgtestTime << endl;
   }
 
+  cout << endl;
+
   // Benchmarking HashTable
   dictfile.seekg(0, ios_base::beg);  
   cout << "DictionaryHashTable..." << endl;
@@ -115,6 +126,7 @@ int main(int argc, char** argv)
     cout << dictsize << "\t" << avgtestTime << endl;
   } 
 
+  cout << endl;
 
   // Benchmarking MultiwayTrie
   dictfile.seekg(0, ios_base::beg);  
@@ -153,5 +165,6 @@ int main(int argc, char** argv)
     long long avgtestTime = testTime/10;
 
     cout << dictsize << "\t" << avgtestTime << endl;
-  }   
+  }
+  fb.close();   
 }

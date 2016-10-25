@@ -1,3 +1,9 @@
+/*
+ * Authors: Alexis Atianzar, Arun Ramakrishnan
+ * Date: 10/10/16
+ * Description: This class is a tester to test the dictionary files.
+ */
+
 #include<iostream>
 #include <fstream>
 #include<string>

@@ -1,3 +1,11 @@
+/*
+ * Authors: Alexis Atianzar, Arun Ramakrishnan
+ * Date: 10/10/16
+ * Description: This class uses a Multiway Trie to store words from a dictionary
+ * in a sorted manner, quickly. 
+ */
+
+
 #include "util.h"
 #include "DictionaryTrie.h"
 #include <iostream>

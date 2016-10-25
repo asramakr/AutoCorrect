@@ -1,3 +1,11 @@
+/*
+ * Authors: Alexis Atianzar, Arun Ramakrishnan
+ * Date: 10/10/16
+ * Description: This class uses a Hashtable to store words from a dictionary
+ * in a sorted manner, quickly. 
+ */
+
+
 #include "util.h"
 #include "DictionaryHashtable.h"
 #include <unordered_set>
